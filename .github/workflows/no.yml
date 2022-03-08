@@ -1,0 +1,26 @@
+name: Build and Deploy
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2.4.0
+
+      - name: Install Yarn
+        run: |
+          sudo apt-get update -y 
+          sudo apt install git -y
+          npm install -g yarn
+          rm -rf yarn.lock
+          
+      - name: Install and Build Project
+        run: |
+          yarn
+          yarn build
+          
+      - name: Deploy App
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: build
