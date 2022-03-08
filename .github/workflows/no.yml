@@ -11,13 +11,11 @@ jobs:
         run: |
           sudo apt-get update -y 
           sudo apt install git -y
-          npm install -g yarn
-          rm -rf yarn.lock
           
       - name: Install and Build Project
         run: |
-          yarn
-          yarn build
+          npm i
+          npm run build
           
       - name: Deploy App
         uses: JamesIves/github-pages-deploy-action@4.1.4
