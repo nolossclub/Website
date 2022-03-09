@@ -56,13 +56,13 @@
 			const Contract_USDC = await new ethers.Contract('0xbD310c711602A605b8cd888240398478dA28b387', abi, provider);
 
 			var busd = await Contract_BUSD.totalSupply();
-			this.busd = (busd.toString() * 100 * 1.02).toFixed(2);
+			this.busd = (busd.toString() * 100).toFixed(0);
 
 			var usdt = await Contract_USDT.totalSupply();
-			this.usdt = (usdt.toString() * 100 * 1.02).toFixed(2);
+			this.usdt = (usdt.toString() * 100).toFixed(0);
 
 			var usdc = await Contract_USDC.totalSupply();
-			this.usdc = (usdc.toString() * 100 * 1.02).toFixed(2);
+			this.usdc = (usdc.toString() * 100).toFixed(0);
 		},
 	};
 </script>
