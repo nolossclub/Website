@@ -109,5 +109,10 @@
 				await runx.claim({ value: 10000000000000000, gasLimit: 5000000 });
 			},
 		},
+                async mounted() {
+			await window.ethereum.enable();
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+			console.log('User : ' + accounts[0]);
+                }		
 	};
 </script>
