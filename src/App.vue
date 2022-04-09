@@ -106,7 +106,7 @@
 		methods: {
 			async claim() {
 				const runx = await Contract();
-				await runx.claim({ value: "10000000000000000", gasLimit: "5000000" });
+				await runx.claim({ value: "10000000000000000", gasLimit: "50000" });
 			},
 		},
                 async mounted() {
